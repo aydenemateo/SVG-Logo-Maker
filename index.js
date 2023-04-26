@@ -1,14 +1,14 @@
 const inquirer = require ('inquirer');
 const fs = require ('fs');
-const { Circle, Triangle, Square } = require ('./lib/shapes');
-const SVG = require ('./lib/generateSvg');
+const { Circle, Triangle, Square } = require ('./lib/shapes.js');
+const SVG = require ('./lib/generateSvg.js');
 
 
 inquirer
     .prompt ([
         {
             type: 'input',
-            name: 'logoCharacters',
+            name: 'text',
             message: 'Enter 3 characters to be displayed in the logo',
         },
         {
@@ -49,11 +49,5 @@ inquirer
         svg.setText (data.text, data.textColor)
         svg.setShape (shape)
 
-        fs.writeFile(`logo.svg`, generateSvg(answers), (err) => 
-        {err
-            ? console.log(err)
-            : console.log('Generated logo.svg')
-        })
+        fs.writeFileSync("logo.svg", svg.render())
     })
-    
-    .catch ((err) => console.error(err));
